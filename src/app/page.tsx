@@ -41,7 +41,12 @@ const Home = () => {
           <Link href={"/products"} className={buttonVariants()}>
             Browse Trending
           </Link>
-          <Button variant={"ghost"} aria-label="Read more about our quality promise">Our quality promise →</Button>
+          <Button
+            variant={"ghost"}
+            aria-label="Read more about our quality promise"
+          >
+            Our quality promise →
+          </Button>
         </div>
       </MaxWidthWrapper>
       <section className="border-t border-zinc-200 bg-gray-50">
@@ -53,7 +58,7 @@ const Home = () => {
                   key={perk.name}
                   className="text-center md:flex md:items-start md:text-left lg:block lg:text-center"
                 >
-                  <div className="flex justify-center" aria-hidden>
+                  <div className="flex justify-center" aria-hidden="true">
                     <div className="size-16 flex justify-center items-center rounded-full bg-rose-100 text-primary">
                       {<perk.icon />}
                     </div>
