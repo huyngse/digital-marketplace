@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { CSSProperties, ReactNode, forwardRef } from "react";
+import { forwardRef } from "react";
 
 export interface MaxWidthWrapperProps
   extends React.HTMLAttributes<HTMLDivElement> {
