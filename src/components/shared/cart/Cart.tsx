@@ -63,14 +63,14 @@ const Cart = () => {
         ) : (
           <div className="flex flex-col h-full items-center justify-center gap-2">
             <div className="relative w-full max-w-[200px] aspect-square mb-4" aria-hidden="true">
-              <Image src="/basket.png" alt="empty shopping cart" fill />
+              <Image src="/basket.png" alt="empty shopping cart" fill sizes="(max-width: 768px) 100px, 200px"/>
             </div>
             <p className="text-xl font-semibold text-muted-foreground">
               Your cart is empty
             </p>
             <SheetTrigger asChild>
               <Link
-                href={"/producs"}
+                href={"/products"}
                 className={buttonVariants({ variant: "link", size: "sm" })}
               >
                 Add items to your cart to checkout
