@@ -3,6 +3,7 @@ import { getPayloadClient } from "./payload/getPayload";
 import { nextApp, nextHandler } from "./lib/nextUtils";
 
 const app = express();
+
 const PORT = Number(process.env.PORT) || 3000;
 
 const start = async () => {
@@ -14,14 +15,17 @@ const start = async () => {
         }
     });
 
-    app.use((req, res) => nextHandler(req, res))
+    app.use((req, res) => nextHandler(req, res));
 
-    nextApp.prepare().then(() => {
-        payload.logger.info("Next.js started");
+    await nextApp.prepare().then(() => {
+        payload.logger.info('Next.js started')
+
         app.listen(PORT, async () => {
-            payload.logger.info(`Next.js App URL: ${process.env.NEXT_PUBLIC_SERVER_URL}`);
+            payload.logger.info(
+                `Next.js App URL: ${process.env.NEXT_PUBLIC_SERVER_URL}`
+            )
         })
-    })
+    });
 }
 
 start();

@@ -2,9 +2,10 @@ import dotenv from "dotenv";
 import path from "path";
 import type { InitOptions } from "payload";
 import payload from "payload";
+import config from "./payload.config";
 
 dotenv.config({
-  path: path.resolve(__dirname, "../.env"),
+  path: path.resolve(__dirname, "../../.env"),
 });
 
 let cached = (global as any).payload;
@@ -33,6 +34,7 @@ export const getPayloadClient = async ({ initOptions }: Args = {}) => {
     cached.promise = payload
       .init({
         ...((initOptions || {}) as InitOptions),
+        config: config,
       })
       .then((p) => {
         cached.client = p;

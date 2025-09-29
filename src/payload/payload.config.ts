@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { buildConfig } from "payload";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
@@ -7,9 +8,9 @@ export default buildConfig({
     secret: process.env.PAYLOAD_SECRET!,
     serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "",
     collections: [],
-    routes: {
-        admin: "/sell"
-    },
+    // routes: {
+    //     admin: "/sell"
+    // },
     admin: {
         meta: {
             titleSuffix: "- Digital Marketplace",
