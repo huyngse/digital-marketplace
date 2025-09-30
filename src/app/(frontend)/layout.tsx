@@ -19,12 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("font-sans antialiased", inter.className)}>
-        <header>
-          <Navbar />
-        </header>
-        <main className="flex flex-col min-h-screen">
-          <div className="flex-1">{children}</div>
-        </main>
+        <div className="flex flex-col min-h-screen">
+          <header>
+            <Navbar />
+          </header>
+          <main className="flex-1">{children}</main>
+        </div>
       </body>
     </html>
   );

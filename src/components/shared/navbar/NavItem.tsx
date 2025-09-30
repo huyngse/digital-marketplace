@@ -48,6 +48,7 @@ const NavItem = ({ category, onOpen, onClose, isOpen }: NavItemProps) => {
                           alt="product category image"
                           fill
                           className="object-cover object-center"
+                          sizes="30vw"
                         />
                       </div>
                       <Link
