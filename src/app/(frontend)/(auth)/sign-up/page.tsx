@@ -13,33 +13,15 @@ import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/shared/PasswordInput";
+import { SignUpInput, signUpSchema } from "@/lib/schemas";
 
-const formSchema = z
-  .object({
-    email: z.email(),
-    password: z
-      .string()
-      .min(6, "Password must be at least 6 characters long!")
-      .max(24, "Password must be less than 24 characters long!"),
-    confirmPassword: z
-      .string()
-      .min(6, "Password must be at least 6 characters long!")
-      .max(24, "Password must be less than 24 characters long!"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    error: "Passwords do not match!",
-    path: ["confirmPassword"],
-  });
-
-type FieldType = z.infer<typeof formSchema>;
 
 const SignUpPage = () => {
-  const form = useForm<FieldType>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignUpInput>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -47,13 +29,13 @@ const SignUpPage = () => {
     },
   });
 
-  const onSubmit = (values: FieldType) => {
+  const onSubmit = (values: SignUpInput) => {
     console.log(values);
   };
 
   return (
     <>
-      <div className="container flex pt-20 flex-col items-center justify-center">
+      <div className="container flex py-20 flex-col items-center justify-center px-2">
         <div className="w-full flex flex-col justify-center space-y-5 sm:w-[350px]">
           <div className="space-y-2 text-center">
             <img src="/rose.png" alt="" className="size-20 mx-auto" />

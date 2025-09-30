@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/shared/navbar/Navbar";
+import { Toaster } from "@/components/ui/sonner";
+import { TRPCReactProvider } from "@/trpc/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("font-sans antialiased", inter.className)}>
-        <div className="flex flex-col min-h-screen">
-          <header>
-            <Navbar />
-          </header>
-          <main className="flex-1">{children}</main>
-        </div>
+        <TRPCReactProvider>
+          <div className="flex flex-col min-h-screen">
+            <header>
+              <Navbar />
+            </header>
+            <main className="flex-1">{children}</main>
+            <Toaster />
+          </div>
+        </TRPCReactProvider>
       </body>
     </html>
   );
