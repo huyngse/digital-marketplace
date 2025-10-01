@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/shared/PasswordInput";
 import { SignUpInput, signUpSchema } from "@/lib/schemas";
-
+import { useTRPC } from "@/trpc/client";
 
 const SignUpPage = () => {
   const form = useForm<SignUpInput>({
@@ -28,6 +28,8 @@ const SignUpPage = () => {
       confirmPassword: "",
     },
   });
+
+  const {} = useTRPC();
 
   const onSubmit = (values: SignUpInput) => {
     console.log(values);
