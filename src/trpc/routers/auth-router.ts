@@ -3,6 +3,7 @@ import { baseProcedure, createTRPCRouter } from '../init.ts';
 import { getPayload } from 'payload';
 import config from '../../../payload.config.ts';
 import { TRPCError } from '@trpc/server';
+import z from 'zod';
 
 export const authRouter = createTRPCRouter({
     createPayloadUser: baseProcedure.input(signUpSchema).mutation(async ({ input }) => {
@@ -34,6 +35,28 @@ export const authRouter = createTRPCRouter({
         })
 
         return { success: true, setToEmail: email }
+    }),
+    verifyEmail: baseProcedure.input(z.object({ token: z.string() })).mutation(async ({ input }) => {
+        const { token } = input;
+        const payload = await getPayload({ config });
+
+
+        try {
+            const isVerified = await payload.verifyEmail({
+                collection: "users",
+                token
+            })
+            if (!isVerified) {
+                throw new TRPCError({ code: "UNAUTHORIZED", message: "Email not verified" });
+            }
+
+            return { success: true }
+        } catch (error: any) {
+            if (error.message?.includes("Verification token is invalid")) {
+                throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid or expired token" });
+            }
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Something went wrong" });
+        }
     })
 });
 export type AuthRouter = typeof authRouter;
