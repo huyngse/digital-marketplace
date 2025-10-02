@@ -18,8 +18,11 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/shared/PasswordInput";
 import { SignUpInput, signUpSchema } from "@/lib/schemas";
 import { useTRPC } from "@/trpc/client";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const SignUpPage = () => {
+  const trpc = useTRPC();
   const form = useForm<SignUpInput>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -29,10 +32,21 @@ const SignUpPage = () => {
     },
   });
 
-  const {} = useTRPC();
+  const registerOptions = trpc.auth.createPayloadUser.mutationOptions();
+  const register = useMutation(registerOptions);
 
-  const onSubmit = (values: SignUpInput) => {
-    console.log(values);
+  const onSubmit = async (values: SignUpInput) => {
+    try {
+      await register.mutateAsync({
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      });
+      form.reset();
+      toast.success(`Account created successfully! You can now sign in.`);
+    } catch (error: any) {
+      toast.error(`Registration failed: ${error.message}`);
+    }
   };
 
   return (
@@ -91,7 +105,9 @@ const SignUpPage = () => {
                   </FormItem>
                 )}
               />
-              <Button className="w-full">Sign Up</Button>
+              <Button className="w-full" disabled={register.isPending}>
+                {register.isPending ? "Signing up..." : "Sign Up"}
+              </Button>
             </form>
           </Form>
         </div>

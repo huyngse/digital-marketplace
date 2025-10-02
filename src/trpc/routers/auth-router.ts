@@ -27,10 +27,13 @@ export const authRouter = createTRPCRouter({
         await payload.create({
             collection: "users",
             data: {
-                email: email,
-                password: password
+                email,
+                password,
+                role: "user"
             }
         })
+
+        return { success: true, setToEmail: email }
     })
 });
 export type AuthRouter = typeof authRouter;
