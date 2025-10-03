@@ -27,7 +27,7 @@ export default function RootLayout({
               <Navbar />
             </header>
             <main className="flex-1">{children}</main>
-            <Toaster richColors theme="light"/>
+            <Toaster richColors theme="light" position="top-center" />
           </div>
         </TRPCReactProvider>
       </body>

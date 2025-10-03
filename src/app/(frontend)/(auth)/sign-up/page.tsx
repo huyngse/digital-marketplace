@@ -20,9 +20,11 @@ import { SignUpInput, signUpSchema } from "@/lib/schemas";
 import { useTRPC } from "@/trpc/client";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const SignUpPage = () => {
   const trpc = useTRPC();
+  const router = useRouter();
   const form = useForm<SignUpInput>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -43,9 +45,22 @@ const SignUpPage = () => {
         confirmPassword: values.confirmPassword,
       });
       form.reset();
-      toast.success(`Account created successfully! You can now sign in.`);
+      toast.success(`Account created successfully!`);
+      router.push(`/verify-email?to=${encodeURIComponent(values.email)}`);
     } catch (error: any) {
-      toast.error(`Registration failed: ${error.message}`);
+      let message = "Registration failed. Please try again.";
+      if (error?.data?.httpStatus) {
+        const status = error.data.httpStatus;
+
+        if (status === 409) {
+          message = "An account with this email already exists.";
+        } else if (status === 400) {
+          message = "Invalid request. Please check your input.";
+        } else if (status === 500) {
+          message = "Server error. Please try again later.";
+        }
+      }
+      toast.error(message);
     }
   };
 
