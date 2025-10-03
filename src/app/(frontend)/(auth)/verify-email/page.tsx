@@ -26,7 +26,7 @@ const VerifyEmailPage = async ({ searchParams }: Props) => {
               height={240}
               alt="Email sent image"
             />
-            <h2 className="font-semibold text-2xl">Check Your Email</h2>
+            <h2 className="font-semibold text-2xl -mt-5">Check Your Email</h2>
             <p className="text-muted-foreground text-center">
               We've sent a verification link to{" "}
               {toEmail ? (
