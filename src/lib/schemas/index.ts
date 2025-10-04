@@ -1,1 +1,1 @@
-export * from "./signup.schema.ts";
+export * from "./auth.schema.ts";

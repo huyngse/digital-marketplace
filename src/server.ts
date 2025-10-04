@@ -3,10 +3,13 @@ import express from "express";
 import { nextApp, nextHandler } from "./lib/nextUtils.ts";
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter } from "./trpc/routers/_app.ts";
+import chalk from "chalk";
 
 const createContext = ({ req, res }: trpcExpress.CreateExpressContextOptions) => ({
     req, res
 })
+
+export type ExpressContext = Awaited<ReturnType<typeof createContext>>
 
 const app = express();
 
@@ -20,7 +23,7 @@ const start = async () => {
     app.use((req, res) => nextHandler(req, res));
     nextApp.prepare().then(() => {
         app.listen(PORT, () => {
-            console.log(`Next.js App URL: ${process.env.NEXT_PUBLIC_SERVER_URL}`)
+            console.log(chalk.magenta(`[Next.js] App URL: ${process.env.NEXT_PUBLIC_SERVER_URL}`))
         })
     })
 }

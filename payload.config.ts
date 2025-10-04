@@ -1,11 +1,11 @@
 import sharp from 'sharp'
-import { slateEditor } from "@payloadcms/richtext-slate";
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Users } from './src/collections/Users.ts';
 import { resendAdapter } from "@payloadcms/email-resend";
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +18,7 @@ export default buildConfig({
             icons: "/favicon.ico",
         }
     },
-    editor: slateEditor({}),
+    editor: lexicalEditor(),
     collections: [Users],
     secret: process.env.PAYLOAD_SECRET || '',
     db: mongooseAdapter({

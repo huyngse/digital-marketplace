@@ -1,4 +1,4 @@
-import { signUpSchema } from '../../lib/schemas/index.ts';
+import { signInSchema, signUpSchema } from '../../lib/schemas/index.ts';
 import { baseProcedure, createTRPCRouter } from '../init.ts';
 import { getPayload } from 'payload';
 import config from '../../../payload.config.ts';
@@ -56,6 +56,27 @@ export const authRouter = createTRPCRouter({
                 throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid or expired token" });
             }
             throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Something went wrong" });
+        }
+    }),
+    signIn: baseProcedure.input(signInSchema).mutation(async ({ input, ctx }) => {
+        const { email, password } = input;
+        const payload = await getPayload({ config });
+
+        try {
+            await payload.login({
+                collection: "users",
+                data: {
+                    email,
+                    password,
+                },
+                context: ctx
+            })
+
+            return { success: true }
+        } catch (error) {
+            throw new TRPCError({
+                code: "UNAUTHORIZED"
+            })
         }
     })
 });

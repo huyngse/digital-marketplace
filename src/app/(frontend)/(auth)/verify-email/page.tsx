@@ -14,7 +14,7 @@ const VerifyEmailPage = async ({ searchParams }: Props) => {
   return (
     <div className="container flex pt-20 flex-col items-center justify-center px-2">
       <div className="w-full sm:w-[350px] space-y-5">
-        {token && typeof token == "string" ? (
+        {token && typeof token === "string" ? (
           <div className="">
             <VerifyEmail token={token} />
           </div>

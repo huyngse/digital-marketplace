@@ -16,7 +16,7 @@ const NavItems = () => {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key == "Escape") {
+      if (e.key === "Escape") {
         handleClose();
       }
     };
@@ -32,7 +32,7 @@ const NavItems = () => {
     <ul className="flex gap-4" ref={navRef}>
       {PRODUCT_CATEGORIES.map((category, i) => {
         const handleOpen = () => {
-          if (activeIndex == i) {
+          if (activeIndex === i) {
             setActiveIndex(null);
           } else {
             setActiveIndex(i);
@@ -45,7 +45,7 @@ const NavItems = () => {
             category={category}
             onOpen={handleOpen}
             onClose={handleClose}
-            isOpen={i == activeIndex}
+            isOpen={i === activeIndex}
           />
         );
       })}

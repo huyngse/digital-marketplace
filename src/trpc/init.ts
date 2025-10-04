@@ -1,5 +1,7 @@
+import type { ExpressContext } from '../server.ts';
 import { initTRPC } from '@trpc/server';
 import { cache } from 'react';
+
 export const createTRPCContext = cache(async () => {
     /**
      * @see: https://trpc.io/docs/server/context
@@ -9,7 +11,7 @@ export const createTRPCContext = cache(async () => {
 
 export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
 
-const t = initTRPC.create({
+const t = initTRPC.context<ExpressContext>().create({
     /**
      * @see https://trpc.io/docs/server/data-transformers
      */
